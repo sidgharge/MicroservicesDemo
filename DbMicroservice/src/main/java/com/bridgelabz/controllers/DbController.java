@@ -1,5 +1,7 @@
 package com.bridgelabz.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,11 @@ public class DbController {
 	@GetMapping("/name/{name}")
 	public User getUserByName(@PathVariable String name) {
 		return userRepository.findByName(name);
+	}
+	
+	@GetMapping("/all")
+	public List<User> getAll() {
+		return userRepository.findAll();
 	}
 	
 	@PostMapping("")

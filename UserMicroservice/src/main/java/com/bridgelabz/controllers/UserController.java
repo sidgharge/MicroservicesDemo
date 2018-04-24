@@ -1,6 +1,10 @@
 package com.bridgelabz.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,5 +31,10 @@ public class UserController {
 	@PostMapping("")
 	public ResponseEntity<String> addUser(@RequestBody User user) {
 		return restTemplate.postForEntity("http://db-service/rest/userdb", user, String.class);
+	}
+	
+	@GetMapping("/getall")
+	public ResponseEntity<List<User>> getAll() {
+		return restTemplate.exchange("http://db-service/rest/userdb/all", HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {});
 	}
 }
