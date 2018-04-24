@@ -1,0 +1,25 @@
+zuul:
+  prefix: 
+  routes:
+    user-service:
+      path: /user/**
+      service-id: user-service
+    db-service:
+      path: /db/**
+      service-id: db-service
+      
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8083/eureka
+  instance:
+    hostname: localhost
+    
+server:
+  port: 8080
+  
+spring:
+  application:
+    name: zuul-service
+      
+      
