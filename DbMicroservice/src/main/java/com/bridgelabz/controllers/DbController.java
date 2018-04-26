@@ -18,7 +18,7 @@ import com.bridgelabz.repositories.UserRepository;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
-@RequestMapping("/rest/userdb")
+//@RequestMapping("/rest/userdb")
 public class DbController {
 
 	@Autowired

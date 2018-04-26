@@ -18,7 +18,7 @@ import com.bridgelabz.models.User;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
-@RequestMapping("/rest")
+//@RequestMapping("/rest/user")
 public class UserController {
 	
 	@Autowired
@@ -26,28 +26,28 @@ public class UserController {
 
 	@GetMapping("/name/{name}")
 	public User getUserByName(@PathVariable String name) {
-		return restTemplate.getForObject("http://db-service/rest/userdb/name/" + name, User.class);
+		return restTemplate.getForObject("http://db-service/" + name, User.class);
 	}
 	
 	@PostMapping("")
 	public ResponseEntity<String> addUser(@RequestBody User user) {
-		return restTemplate.postForEntity("http://db-service/rest/userdb", user, String.class);
+		return restTemplate.postForEntity("http://db-service/", user, String.class);
 	}
 	
 	@GetMapping("/getall")
 	public ResponseEntity<List<User>> getAll() {
-		return restTemplate.exchange("http://db-service/rest/userdb/all", HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {});
+		return restTemplate.exchange("http://db-service/all", HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {});
 	}
 	
 	@GetMapping("/getport")
 	public int getPort() {
-		return restTemplate.getForObject("http://db-service/rest/userdb/port", Integer.class);
+		return restTemplate.getForObject("http://db-service/port", Integer.class);
 	}
 	
 	@HystrixCommand(groupKey="test", commandKey="test", fallbackMethod="testFallback")
 	@GetMapping("/hystrixtest")
 	public String hystrixTest() {
-		return restTemplate.getForObject("http://db-service/rest/userdb/nohystrixtest", String.class);
+		return restTemplate.getForObject("http://db-service/nohystrixtest", String.class);
 	}
 	
 	public String testFallback(Throwable th) {
