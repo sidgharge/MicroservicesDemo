@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.bridgelabz.models.User;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
 @RequestMapping("/rest/user")
@@ -36,5 +37,20 @@ public class UserController {
 	@GetMapping("/getall")
 	public ResponseEntity<List<User>> getAll() {
 		return restTemplate.exchange("http://db-service/rest/userdb/all", HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {});
+	}
+	
+	@GetMapping("/getport")
+	public int getPort() {
+		return restTemplate.getForObject("http://db-service/rest/userdb/port", Integer.class);
+	}
+	
+	@HystrixCommand(groupKey="test", commandKey="test", fallbackMethod="testFallback")
+	@GetMapping("/hystrixtest")
+	public String hystrixTest() {
+		return restTemplate.getForObject("http://db-service/rest/userdb/nohystrixtest", String.class);
+	}
+	
+	public String testFallback(Throwable th) {
+		return "got ex: " + th.getMessage();
 	}
 }
