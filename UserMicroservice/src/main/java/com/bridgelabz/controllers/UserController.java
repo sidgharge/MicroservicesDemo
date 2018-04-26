@@ -18,7 +18,7 @@ import com.bridgelabz.models.User;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
-@RequestMapping("/rest/user")
+@RequestMapping("/rest")
 public class UserController {
 	
 	@Autowired
